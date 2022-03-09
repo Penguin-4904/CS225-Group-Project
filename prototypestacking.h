@@ -13,6 +13,9 @@ class StackAndPlay{
     private:
         int roundMax;
         int arraySize;
+
+        // Does this go here or main?
+        Stack *stack[arraySize];
     public:
         // Set up terminal to allow for a key to be pressed and registered without hitting space
         StackAndPlay(){system("stty raw");};
@@ -26,7 +29,7 @@ class StackAndPlay{
                 // Print Base Platform
                 cout << stack[1];
                 // Print "moving" platform
-                    
+                    movingPlatform();
 
                 // Delay of x per movment to allow user to see
 
@@ -45,17 +48,12 @@ class StackAndPlay{
             }
         };
         void setArraySize(int desiredArraySize = 15){arraySize = desiredArraySize};
+        
+        // May need to change char I can't remember if its an allowed character in c++
+        void basePlatform(){stack[1]->"▢▢▢▢▢";};
+
         void movingPlatform(){};
 };
-
-
-// I feel like the following needs to be done in main or somewhere else
-
-// intalize Array
-Stack *stack[size];
-
-// Intalize starting platform
-stack[1]->"▢▢▢▢▢";
 
 
 
