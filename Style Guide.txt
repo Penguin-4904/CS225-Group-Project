@@ -11,7 +11,10 @@ Before each class prototype a multiline comment should contain the name of the c
 Before each function prototype a multiline comment should contain the name of the function, a brief description, and a list of inputs and returns.
 
 Classes:
-Each class prototype shall be contiained in a header file, and all member functions shall be defined in a separate .ccp file, not within the class prototype.
+Each class prototype shall be contianed in a header file, and all member functions shall be defined in a separate .ccp file, not within the class prototype.
 
 Functions:
 Any functions that are not part of a class shall be grouped in appropriate header files with other standalone function prototypes, with an accompanying .ccp file to provide function declaration.
+
+Misc:
+Curly Braces should be on the same line as the scope declaration (such as Function, namespace, etc.) that they are starting.
