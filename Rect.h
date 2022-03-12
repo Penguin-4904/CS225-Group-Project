@@ -3,6 +3,8 @@
 //
 
 #include "Object.h"
+#include <string>
+#include <vector>
 
 #ifndef CS225_GROUP_PROJECT_RECT_H
 #define CS225_GROUP_PROJECT_RECT_H
@@ -10,10 +12,13 @@
 
 class Rect : public Object {
 private:
-    int sizeX;
-    int sizeY;
+    int height;
+    int width;
 public:
-    std::string* print()
+    Rect(int w = 2, int h = 2, int x_i = 0, int y_i = 0): Object(x_i, y_i), height{h}, width{w} {}
+    std::vector<std::string> print() const;
+    int getHeight(){return height;}
+    int getWidth(){return width;}
 };
 
 

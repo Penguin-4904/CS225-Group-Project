@@ -13,9 +13,10 @@ protected:
     int x;
     int y;
 public:
-    virtual std::string* print();
-    int posX() {return x}
-    int posY() {return y}
+    Object(int x_i = 0, int y_i = 0): x{x_i}, y{y_i} {}
+    virtual std::vector<std::string> print() const = 0;
+    int posX() const {return x;}
+    int posY() const {return y;}
 };
 
 

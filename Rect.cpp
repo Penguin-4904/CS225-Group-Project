@@ -4,11 +4,11 @@
 
 #include "Rect.h"
 
-std::string* Rect::print(){
-    std::string * out;
-    out = new std::string[sizeY];
-    for (int i = 0; i < sizeY; i++){
-        out[i] = std::string(sizeX, '#');
+std::vector<std::string> Rect::print() const {
+    std::vector<std::string> out;
+    std::string line = std::string(width, '#');
+    for (int i = 0; i < height; i++){
+        out.push_back(line);
     }
     return out;
 }
