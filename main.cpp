@@ -5,8 +5,9 @@
 // Libraries
 #include <iostream>
 #include <string>
-
-#include "Board.h"
+#include <unistd.h>
+#include <curses.h>
+#include "Stack.h"
 
 // Reference Files
 
@@ -16,10 +17,13 @@ using namespace std;
 
 // Main
 int main(){
-    Board stack;
-    Rect test(2, 2, 9, 8);
-    stack.addObject(&test);
-    cout<<stack<<endl;
+    Stack stack;
+    int count = 0;
+    while (count < 60){
+        count ++;
+        usleep(10000);
+        stack.step();
+    }
     return 0;
 }
 

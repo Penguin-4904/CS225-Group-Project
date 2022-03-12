@@ -17,6 +17,8 @@ public:
     virtual std::vector<std::string> print() const = 0;
     int posX() const {return x;}
     int posY() const {return y;}
+    void setX(int X) {x = X;}
+    void setY(int Y) {y = Y;}
 };
 
 

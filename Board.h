@@ -15,11 +15,11 @@ class Board {
 protected:
     int height;
     int width;
-    std::vector<Object*> objects;
+    std::vector<std::shared_ptr<Object>> objects;
 public:
-    Board(int h = 10, int w = 10): height{h}, width{w}{}
-    std::vector<Object*> getObjects(){return objects;}
-    void addObject(Object*);
+    Board(int w = 10, int h = 10): height{h}, width{w}{}
+    std::vector<std::shared_ptr<Object>> getObjects(){return objects;}
+    void addObject(std::shared_ptr<Object>);
     friend std::ostream& operator<<(std::ostream&, const Board&);
 };
 

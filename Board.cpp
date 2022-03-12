@@ -4,7 +4,7 @@
 
 #include "Board.h"
 
-void Board::addObject(Object* obj) {
+void Board::addObject(std::shared_ptr<Object> obj) {
     objects.push_back(obj);
 }
 
