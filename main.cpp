@@ -23,6 +23,7 @@ int main(){
         count ++;
         usleep(10000);
         stack.step();
+        // what
     }
     return 0;
 }
