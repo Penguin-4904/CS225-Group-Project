@@ -19,10 +19,10 @@ void user_input()
 {
     while (true && !stopflag)
     {
-        char user_input;
-        cin >> user_input;
+        string user_input;
+        cin.ignore();
 
-        if (user_input == 'c')
+        if (user_input.length() == 0)
         {
             cout << "Input detected" << endl;
         }
