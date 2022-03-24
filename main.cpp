@@ -4,9 +4,7 @@
 
 // Libraries
 #include <iostream>
-#include <string>
 #include <unistd.h>
-#include <curses.h>
 #include "Stack.h"
 
 // Reference Files
@@ -17,11 +15,15 @@ using namespace std;
 
 // Main
 int main(){
+    int maxH, maxW;
+    getmaxyx(stdscr, maxH, maxW);
+    cout << maxH << endl;
+    cout << maxW << endl;
     Stack stack;
     int count = 0;
     while (count < 60){
         count ++;
-        usleep(10000);
+        usleep(100000);
         stack.step();
         // what
     }

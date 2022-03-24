@@ -4,32 +4,35 @@
 
 #include "Board.h"
 
+Board::Board(int w, int h) {
+    initscr();
+    cbreak();
+    noecho();
+    int maxH, maxW;
+    getmaxyx(stdscr, maxH, maxW);
+    height = h;
+    width = w;
+}
+
 void Board::addObject(std::shared_ptr<Object> obj) {
     objects.push_back(obj);
 }
 
-std::ostream& operator<<(std::ostream& out, const Board& board) {
-
-    std::string line(board.width, '*');
-    line += "\n";
-
-    std::string boardString;
-    for (int i = 0; i < board.height; i++){
-        boardString += line;
-    }
-
-    int n = board.objects.size();
+void Board::print() {
+    clear();
+    int n = objects.size();
 
     for (int i = 0; i < n; i++){
-        std::vector<std::string> v = board.objects[i]->print();
-        int y = board.objects[i]->posY();
-        int x = board.objects[i]->posX();
-        for (int j = 0; j < v.size() && (j + y) < board.height; j++){
-            boardString.replace((y + j) * line.length() + x, std::min((int)v[j].length(), board.width - x), v[j], 0, board.width - x);
+        std::vector<std::string> v = objects[i]->print();
+        int y = objects[i]->posY();
+        int x = objects[i]->posX();
+        for (std::string s : v) {
+            move(y, x);
+            y++;
+            addstr(s.c_str());
         }
     }
-
-    out << boardString;
-
-    return out;
+    refresh();
 }
+
+

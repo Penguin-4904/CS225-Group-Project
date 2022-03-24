@@ -4,7 +4,7 @@
 
 #include "Stack.h"
 
-Stack::Stack(int size) : Board(100, 10), direction{1}, squareSize{size}, layer{2} {
+Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2} {
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
 }
@@ -20,9 +20,5 @@ void Stack::step() {
 
     objects.back()->setX(x + direction);
 
-    // Clear Screen
-    std::cout << "\x1B[2J\x1B[H";
-
-    // Print to Screen
-    std::cout << *this;
+    this->print();
 }

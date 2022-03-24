@@ -3,6 +3,7 @@
 //
 
 #include <string>
+#include <vector>
 
 #ifndef CS225_GROUP_PROJECT_OBJECT_H
 #define CS225_GROUP_PROJECT_OBJECT_H
