@@ -16,7 +16,6 @@ class Board {
 protected:
     int height;
     int width;
-    WINDOW * win;
     std::vector<std::shared_ptr<Object>> objects;
 public:
     Board(int w = 10, int h = 10);

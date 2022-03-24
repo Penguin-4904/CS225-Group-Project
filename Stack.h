@@ -13,9 +13,10 @@ private:
     int direction;
     int squareSize;
     int layer;
+    int rect_width;
 public:
-    Stack(int size = 2);
-    void step();
+    Stack(int size = 3);
+    bool step(bool);
 
 };
 

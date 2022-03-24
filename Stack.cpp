@@ -4,21 +4,35 @@
 
 #include "Stack.h"
 
-Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2} {
+Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2}, rect_width{size} {
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
 }
 
-void Stack::step() {
-    int x = objects.back()->posX();
-    if (x + squareSize >= width){
-        direction = -1;
-    }
-    if (x <= 0){
-        direction = 1;
+bool Stack::step(bool in) {
+    int x_block = objects.back()->posX();
+    int x_tower = objects.end()[-2]->posX();
+    if (in) {
+        rect_width -= abs(x_block - x_tower);
+        if (rect_width <= 0){
+            return true;
+        }
+        objects.pop_back();
+        objects.push_back(std::make_shared<Rect>(Rect(rect_width, squareSize, std::max(x_block, x_tower), height - layer * squareSize)));
+        layer++;
+        objects.push_back(std::make_shared<Rect>(Rect(rect_width, squareSize, 0, height - layer * squareSize)));
     }
 
-    objects.back()->setX(x + direction);
+    else{
+        if (x_block + squareSize >= width){
+            direction = -1;
+        }
+        if (x_block <= 0){
+            direction = 1;
+        }
+        objects.back()->setX(x_block + direction);
+    }
 
     this->print();
+    return false;
 }

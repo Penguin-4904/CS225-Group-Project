@@ -17,8 +17,6 @@ private:
 public:
     Rect(int w = 2, int h = 2, int x_i = 0, int y_i = 0): Object(x_i, y_i), height{h}, width{w} {}
     std::vector<std::string> print() const;
-    int getHeight(){return height;}
-    int getWidth(){return width;}
 };
 
 

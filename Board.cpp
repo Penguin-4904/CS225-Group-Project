@@ -32,6 +32,7 @@ void Board::print() {
             addstr(s.c_str());
         }
     }
+    move(0, 0);
     refresh();
 }
 
