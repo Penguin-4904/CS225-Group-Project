@@ -2,6 +2,10 @@
 // Created by Tobias Braun on 3/11/22.
 //
 
+#include <thread>
+#include <chrono>
+#include <math.h>
+#include <iostream>
 #include "Board.h"
 
 #ifndef CS225_GROUP_PROJECT_STACK_H
@@ -14,10 +18,21 @@ private:
     int squareSize;
     int layer;
     int rect_width;
+
+    bool gameOver;
+    bool inFlag;
+
+    std::thread gameThread;
+    std::thread inThread;
+
+    bool step();
+    void display();
+    void gameThreadFun();
+    void inThreadFun();
+
 public:
     Stack(int size = 3);
-    bool step(bool);
-
+    ~Stack();
 };
 
 

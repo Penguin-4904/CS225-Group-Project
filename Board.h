@@ -2,11 +2,10 @@
 // Created by Tobias Braun on 3/8/22.
 //
 
-#include "Rect.h"
 #include <vector>
 #include <string>
-#include <iostream>
 #include <curses.h>
+#include "Rect.h"
 
 #ifndef CS225_GROUP_PROJECT_BOARD_H
 #define CS225_GROUP_PROJECT_BOARD_H

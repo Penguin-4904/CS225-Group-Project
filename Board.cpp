@@ -19,7 +19,6 @@ void Board::addObject(std::shared_ptr<Object> obj) {
 }
 
 void Board::print() {
-    clear();
     int n = objects.size();
 
     for (int i = 0; i < n; i++){
@@ -32,8 +31,6 @@ void Board::print() {
             addstr(s.c_str());
         }
     }
-    move(0, 0);
-    refresh();
 }
 
 

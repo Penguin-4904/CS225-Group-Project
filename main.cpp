@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -36,7 +35,7 @@ void game_item(bool* stop_flag, Stack* st, bool* in_flag)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
-        *stop_flag = st->step(*in_flag);
+        //*stop_flag = st->step(*in_flag);
         *in_flag = false;
     }
 }
@@ -47,22 +46,24 @@ int main()
 
     Stack stack;
 
-    bool input_flag = false;
-    bool stop_flag = false;
+//    bool input_flag = false;
+//    bool stop_flag = false;
+//
+//    // intalize thread
+//    thread input(user_input, &stop_flag, &input_flag);
+//
+//    // intalize thread
+//    thread output(game_item, &stop_flag, &stack, &input_flag);
+//
+//    // join the threads to wait for each other
+//    input.join();
+//    output.join();
+//
+//    // end threads
+//    input.~thread();
+//    output.~thread();
 
-    // intalize thread
-    thread input(user_input, &stop_flag, &input_flag);
-
-    // intalize thread
-    thread output(game_item, &stop_flag, &stack, &input_flag);
-
-    // join the threads to wait for each other
-    input.join();
-    output.join();
-
-    // end threads
-    input.~thread();
-    output.~thread();
+    stack.~Stack();
 
     cout << "end" << endl;
 

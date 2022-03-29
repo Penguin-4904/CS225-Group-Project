@@ -4,15 +4,19 @@
 
 #include "Stack.h"
 
-Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2}, rect_width{size} {
+Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2}, rect_width{size}, gameOver(false), inFlag(false) {
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
     addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
+    inThread = std::thread(&Stack::inThreadFun, this);
+    gameThread = std::thread(&Stack::gameThreadFun, this);
 }
 
-bool Stack::step(bool in) {
+bool Stack::step() {
+
     int x_block = objects.back()->posX();
     int x_tower = objects.end()[-2]->posX();
-    if (in) {
+    if (inFlag) {
+        inFlag = false;
         rect_width -= abs(x_block - x_tower);
         if (rect_width <= 0){
             return true;
@@ -33,6 +37,60 @@ bool Stack::step(bool in) {
         objects.back()->setX(x_block + direction);
     }
 
-    this->print();
+
     return false;
+
 }
+
+void Stack::display() {
+    clear();
+    if (!gameOver){
+        this->print();
+        move(0, 0);
+        std::string score = "Score: " + std::to_string(layer - 2);
+        addstr(score.c_str());
+    } else {
+
+        std::string end_screen = "Game Over!\nScore: " + std::to_string(layer - 2);
+        move(height/2, width/2 - end_screen.length()/2);
+        addstr(end_screen.c_str());
+    }
+    refresh();
+}
+
+void Stack::gameThreadFun() {
+
+    while (!gameOver){
+
+        if (!gameOver){
+            gameOver = this->step();
+        }
+
+        this->display();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(int(1000 * exp(1-layer))));
+
+    }
+}
+
+void Stack::inThreadFun() {
+
+    while (!gameOver){
+
+        std::cin.ignore();
+        inFlag = true;
+
+    }
+}
+
+Stack::~Stack() {
+
+    inThread.join();
+    gameThread.join();
+
+    inThread.~thread();
+    gameThread.~thread();
+}
+
+
+
