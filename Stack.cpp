@@ -5,8 +5,8 @@
 #include "Stack.h"
 
 Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2}, rect_width{size}, gameOver(false), inFlag(false) {
-    addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
-    addObject(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
+    objects.push_back(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
+    objects.push_back(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
     inThread = std::thread(&Stack::inThreadFun, this);
     gameThread = std::thread(&Stack::gameThreadFun, this);
 }
@@ -50,10 +50,13 @@ void Stack::display() {
         std::string score = "Score: " + std::to_string(layer - 2);
         addstr(score.c_str());
     } else {
-
-        std::string end_screen = "Game Over!\nScore: " + std::to_string(layer - 2);
-        move(height/2, width/2 - end_screen.length()/2);
-        addstr(end_screen.c_str());
+        std::string text = "Game Over!";
+        move(height/2, (width/2.0 - text.length()/2.0));
+        addstr("Game Over!");
+        std::string score = "Score: " + std::to_string(layer - 2);
+        move(height/2 + 1, (width/2.0 - score.length()/2.0));
+        addstr(score.c_str());
+        move(0,0);
     }
     refresh();
 }
@@ -84,12 +87,8 @@ void Stack::inThreadFun() {
 }
 
 Stack::~Stack() {
-
     inThread.join();
     gameThread.join();
-
-    inThread.~thread();
-    gameThread.~thread();
 }
 
 

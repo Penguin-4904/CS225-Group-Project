@@ -19,8 +19,8 @@ protected:
 public:
     Board(int w = 10, int h = 10);
     std::vector<std::shared_ptr<Object>> getObjects(){return objects;}
-    void addObject(std::shared_ptr<Object>);
     void print();
+    friend std::ostream& operator<<(std::ostream&, Board&);
 };
 
 

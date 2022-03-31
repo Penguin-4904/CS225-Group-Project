@@ -14,10 +14,6 @@ Board::Board(int w, int h) {
     width = w;
 }
 
-void Board::addObject(std::shared_ptr<Object> obj) {
-    objects.push_back(obj);
-}
-
 void Board::print() {
     int n = objects.size();
 
@@ -27,10 +23,15 @@ void Board::print() {
         int x = objects[i]->posX();
         for (std::string s : v) {
             move(y, x);
-            y++;
             addstr(s.c_str());
+            y++;
         }
     }
+}
+
+std::ostream &operator<<(std::ostream& os, Board& board) {
+
+    return os;
 }
 
 
