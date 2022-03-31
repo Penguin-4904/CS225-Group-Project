@@ -29,7 +29,26 @@ void Board::print() {
     }
 }
 
-std::ostream &operator<<(std::ostream& os, Board& board) {
+std::ostream& operator<<(std::ostream& os, const Board& board) {
+
+    std::string boardString;
+
+    for (int i = 0; i < board.height; i++){
+        boardString += std::string(board.width, ' ') += "\n" ;
+    }
+
+    int n = board.objects.size();
+
+    for (int i = 0; i < n; i++){
+        std::vector<std::string> v = board.objects[i]->print();
+        int y = board.objects[i]->posY();
+        int x = board.objects[i]->posX();
+        for (int j = 0; j < v.size() && (j + y) < board.height; j++){
+            boardString.replace((y + j) * (board.width + 1) + x, std::min((int)v[j].length(), board.width - x), v[j], 0, board.width - x);
+        }
+    }
+
+    os << boardString;
 
     return os;
 }

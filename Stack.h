@@ -4,8 +4,10 @@
 
 #include <thread>
 #include <chrono>
-#include <math.h>
-#include <iostream>
+#include <cmath>
+
+#include <fstream>
+#include <ctime>
 #include "Board.h"
 
 #ifndef CS225_GROUP_PROJECT_STACK_H
@@ -14,11 +16,12 @@
 
 class Stack: public Board {
 private:
-    int direction;
-    int squareSize;
-    int layer;
-    int rect_width;
 
+    int rect_height;
+    int rect_width;
+    int layer;
+
+    bool direction;
     bool gameOver;
     bool inFlag;
 
@@ -31,7 +34,7 @@ private:
     void inThreadFun();
 
 public:
-    Stack(int size = 3);
+    Stack(int = 3, int = 1);
     ~Stack();
 };
 

@@ -4,9 +4,9 @@
 
 #include "Stack.h"
 
-Stack::Stack(int size) : Board(20, 20), direction{1}, squareSize{size}, layer{2}, rect_width{size}, gameOver(false), inFlag(false) {
-    objects.push_back(std::make_shared<Rect>(Rect(squareSize, squareSize, (width - squareSize)/2, height - squareSize)));
-    objects.push_back(std::make_shared<Rect>(Rect(squareSize, squareSize, 0, height - layer * squareSize)));
+Stack::Stack(int rw, int rh) : Board(20, 20), direction{true}, rect_height{rh}, layer{2}, rect_width{rw}, gameOver(false), inFlag(false) {
+    objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, (width - rect_width)/2, height - rect_height)));
+    objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
     inThread = std::thread(&Stack::inThreadFun, this);
     gameThread = std::thread(&Stack::gameThreadFun, this);
 }
@@ -22,19 +22,19 @@ bool Stack::step() {
             return true;
         }
         objects.pop_back();
-        objects.push_back(std::make_shared<Rect>(Rect(rect_width, squareSize, std::max(x_block, x_tower), height - layer * squareSize)));
+        objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, std::max(x_block, x_tower), height - layer * rect_height)));
         layer++;
-        objects.push_back(std::make_shared<Rect>(Rect(rect_width, squareSize, 0, height - layer * squareSize)));
+        objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
     }
 
     else{
-        if (x_block + squareSize >= width){
-            direction = -1;
+        if (x_block + rect_width >= width){
+            direction = false;
         }
         if (x_block <= 0){
-            direction = 1;
+            direction = true;
         }
-        objects.back()->setX(x_block + direction);
+        objects.back()->setX(x_block + (direction - .5) * 2);
     }
 
 
@@ -71,7 +71,7 @@ void Stack::gameThreadFun() {
 
         this->display();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(int(1000 * exp(1-layer))));
+        std::this_thread::sleep_for(std::chrono::milliseconds(int(100 * exp((2 - layer)/4.0) + 50)));
 
     }
 }
@@ -87,8 +87,19 @@ void Stack::inThreadFun() {
 }
 
 Stack::~Stack() {
+
     inThread.join();
     gameThread.join();
+
+    time_t now = time(0);
+    char* date_time = ctime(&now);
+
+    std::string name = "Stack " + std::string(date_time) + ".txt";
+    std::ofstream fout(name);
+    if (fout.is_open()){
+        fout << *this;
+    }
+
 }
 
 
