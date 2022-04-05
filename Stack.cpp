@@ -61,10 +61,10 @@ void Stack::game_thread_fun() {
 }
 
 void Stack::input_thread_fun() {
-    while (!gameOver) {
+     do {
         std::cin.ignore();
         inFlag = true;
-    }
+    } while (!gameOver)
 }
 
 Stack::~Stack() {
