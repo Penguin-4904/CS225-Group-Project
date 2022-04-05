@@ -64,7 +64,7 @@ void Stack::input_thread_fun() {
      do {
         std::cin.ignore();
         inFlag = true;
-    } while (!gameOver)
+    } while (!gameOver);
 }
 
 Stack::~Stack() {
