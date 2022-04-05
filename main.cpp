@@ -1,7 +1,6 @@
 #include "Stack.h"
 
-int main()
-{
+int main() {
     Stack stack;
     return 0;
 }

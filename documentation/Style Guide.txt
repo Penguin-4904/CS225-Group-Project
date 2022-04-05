@@ -7,11 +7,11 @@ Variable and object instance names should use camel case without capitalizing th
 Functions should use underscores and have no capitals when possible (i.e. class constructors can not)
 
 Commenting:
-Before each class prototype a multiline comment should contain the name of the class, a brief description of its use, and list all class members and methods.
+Before each class prototype a multiline comment should contain the name of the class, a brief description of its use, and list all class members.
 Before each function prototype a multiline comment should contain the name of the function, a brief description, and a list of inputs and returns.
 
 Classes:
-Each class prototype shall be contianed in a header file, and all member functions shall be defined in a separate .ccp file, not within the class prototype.
+Each class prototype shall be contianed in a header file, and all member functions, other than getter and setter fucntions, shall be defined in a separate .ccp file.
 
 Functions:
 Any functions that are not part of a class shall be grouped in appropriate header files with other standalone function prototypes, with an accompanying .ccp file to provide function declaration.

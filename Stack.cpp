@@ -1,14 +1,10 @@
-//
-// Created by Tobias Braun on 3/11/22.
-//
-
 #include "Stack.h"
 
 Stack::Stack(int rw, int rh) : Board(20, 50), direction{true}, rect_height{rh}, layer{2}, rect_width{rw}, gameOver(false), inFlag(false) {
     objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, (width - rect_width)/2, height - rect_height)));
     objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
-    inThread = std::thread(&Stack::inThreadFun, this);
-    gameThread = std::thread(&Stack::gameThreadFun, this);
+    inputThread = std::thread(&Stack::input_thread_fun, this);
+    gameThread = std::thread(&Stack::game_thread_fun, this);
 }
 
 bool Stack::step() {
@@ -17,7 +13,7 @@ bool Stack::step() {
     if (inFlag) {
         inFlag = false;
         rect_width -= abs(x_block - x_tower);
-        if (rect_width <= 0){
+        if (rect_width <= 0) {
             return true;
         }
         objects.pop_back();
@@ -26,10 +22,10 @@ bool Stack::step() {
         objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
     }
     else{
-        if (x_block + rect_width >= width){
+        if (x_block + rect_width >= width) {
             direction = false;
         }
-        if (x_block <= 0){
+        if (x_block <= 0) {
             direction = true;
         }
         objects.back()->setX(x_block + (direction - .5) * 2);
@@ -56,34 +52,23 @@ void Stack::display() {
     refresh();
 }
 
-void Stack::gameThreadFun() {
-
-    while (!gameOver){
-
-        if (!gameOver){
-            gameOver = this->step();
-        }
-
+void Stack::game_thread_fun() {
+    while (!gameOver) {
+        gameOver = this->step();
         this->display();
-
         std::this_thread::sleep_for(std::chrono::milliseconds(int(100 * exp((2 - layer)/4.0) + 50)));
-
     }
 }
 
-void Stack::inThreadFun() {
-
-    while (!gameOver){
-
+void Stack::input_thread_fun() {
+    while (!gameOver) {
         std::cin.ignore();
         inFlag = true;
-
     }
 }
 
 Stack::~Stack() {
-
-    inThread.join();
+    inputThread.join();
     gameThread.join();
 
     time_t now = time(0);
@@ -91,11 +76,10 @@ Stack::~Stack() {
 
     std::string name = "Stack " + std::string(date_time) + ".txt";
     std::ofstream fout(name);
-    if (fout.is_open()){
+    if (fout.is_open()) {
         std::string score = "Score: " + std::to_string(layer - 2);
         fout << *this << score;
     }
-
 }
 
 

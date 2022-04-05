@@ -8,8 +8,6 @@ Board::Board(int w, int h) {
     initscr();
     cbreak();
     noecho();
-    int maxH, maxW;
-    getmaxyx(stdscr, maxH, maxW);
     height = h;
     width = w;
 }
