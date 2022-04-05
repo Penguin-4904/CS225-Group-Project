@@ -4,7 +4,7 @@
 
 #include "Stack.h"
 
-Stack::Stack(int rw, int rh) : Board(20, 20), direction{true}, rect_height{rh}, layer{2}, rect_width{rw}, gameOver(false), inFlag(false) {
+Stack::Stack(int rw, int rh) : Board(20, 50), direction{true}, rect_height{rh}, layer{2}, rect_width{rw}, gameOver(false), inFlag(false) {
     objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, (width - rect_width)/2, height - rect_height)));
     objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
     inThread = std::thread(&Stack::inThreadFun, this);
@@ -12,7 +12,6 @@ Stack::Stack(int rw, int rh) : Board(20, 20), direction{true}, rect_height{rh}, 
 }
 
 bool Stack::step() {
-
     int x_block = objects.back()->posX();
     int x_tower = objects.end()[-2]->posX();
     if (inFlag) {
@@ -26,7 +25,6 @@ bool Stack::step() {
         layer++;
         objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
     }
-
     else{
         if (x_block + rect_width >= width){
             direction = false;
@@ -36,10 +34,7 @@ bool Stack::step() {
         }
         objects.back()->setX(x_block + (direction - .5) * 2);
     }
-
-
     return false;
-
 }
 
 void Stack::display() {
@@ -97,7 +92,8 @@ Stack::~Stack() {
     std::string name = "Stack " + std::string(date_time) + ".txt";
     std::ofstream fout(name);
     if (fout.is_open()){
-        fout << *this;
+        std::string score = "Score: " + std::to_string(layer - 2);
+        fout << *this << score;
     }
 
 }

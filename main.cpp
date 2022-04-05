@@ -3,7 +3,6 @@
 int main()
 {
     Stack stack;
-
     return 0;
 }
 
