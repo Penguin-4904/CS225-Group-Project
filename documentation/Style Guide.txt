@@ -1,5 +1,3 @@
-
-
 Naming conventions:
 All names should be descriptive enough to provide an understanding of the objects type, class functionality, and function purpose.
 Class names should be capitalized camel case.

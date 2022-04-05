@@ -78,7 +78,7 @@ public:
      *      int rh: The rectangle height.
      * Returns: None
      */
-    Stack(int = 3, int = 1);
+    Stack(int rw = 3, int rh = 1);
 
     /*
      * Member Function: ~Stack()

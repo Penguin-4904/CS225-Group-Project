@@ -4,8 +4,20 @@ Board::Board(int w, int h) {
     initscr();
     cbreak();
     noecho();
-    height = h;
-    width = w;
+    int maxx = getmaxx(stdscr);
+    if (w > maxx || w < 0){
+        width = maxx;
+    } else {
+        width = w;
+    }
+
+    int maxy = getmaxy(stdscr);
+    if (h > maxy || h < 0){
+        height = maxy;
+    } else {
+        height = h;
+    }
+
 }
 
 void Board::print() {
