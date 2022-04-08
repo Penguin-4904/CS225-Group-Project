@@ -10,7 +10,7 @@ void checkFile()
     std::string name = "Stack " + std::string(date_time) + ".txt";
 
     ifstream file_to_check(name);
-    if (fileToCheck.is_open() != true)
+    if (file_to_check.is_open() != true)
     {
       throw string("ER01");
     }
