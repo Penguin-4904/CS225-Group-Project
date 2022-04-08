@@ -1,6 +1,6 @@
 #include "Standalone.h"
 
-void CheckFile()
+void checkFile()
 {
   try
   {
@@ -9,13 +9,13 @@ void CheckFile()
 
     std::string name = "Stack " + std::string(date_time) + ".txt";
 
-    ifstream fileToCheck(name);
+    ifstream file_to_check(name);
     if (fileToCheck.is_open() != true)
     {
       throw string("ER01");
     }
 
-    fileToCheck.close();
+    file_to_check.close();
   }
   catch (string error)
   {

@@ -11,4 +11,4 @@ using namespace std;
  * Inputs: None.
  * Returns: None.
  */
-void CheckFile(){};
+void checkFile(){};
