@@ -20,7 +20,7 @@ class Board {
 protected:
     int height;
     int width;
-    std::vector<std::shared_ptr<Object>> objects;
+    std::vector<std::unique_ptr<Object>> objects;
 public:
     /*
      * Member Function: Board(int w, int h)

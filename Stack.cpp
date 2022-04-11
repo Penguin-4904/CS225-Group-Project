@@ -1,8 +1,8 @@
 #include "Stack.h"
 
 Stack::Stack(int rw, int rh) : Board(20, 50), direction{true}, rect_height{rh}, layer{2}, rect_width{rw}, gameOver(false), inFlag(false) {
-    objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, (width - rect_width)/2, height - rect_height)));
-    objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
+    objects.push_back(std::move(std::make_unique<Rect>(rect_width, rect_height, (width - rect_width)/2, height - rect_height)));
+    objects.push_back(std::move(std::make_unique<Rect>(rect_width, rect_height, 0, height - layer * rect_height)));
     inputThread = std::thread(&Stack::input_thread_fun, this);
     gameThread = std::thread(&Stack::game_thread_fun, this);
 }
@@ -17,9 +17,9 @@ bool Stack::step() {
             return true;
         }
         objects.pop_back();
-        objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, std::max(x_block, x_tower), height - layer * rect_height)));
+        objects.push_back(std::move(std::make_unique<Rect>(rect_width, rect_height, std::max(x_block, x_tower), height - layer * rect_height)));
         layer++;
-        objects.push_back(std::make_shared<Rect>(Rect(rect_width, rect_height, 0, height - layer * rect_height)));
+        objects.push_back(std::move(std::make_unique<Rect>(rect_width, rect_height, 0, height - layer * rect_height)));
     }
     else{
         if (x_block + rect_width >= width) {
